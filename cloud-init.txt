@@ -1,0 +1,22 @@
+#cloud-config
+package_upgrade: true
+packages:
+  - apache2
+
+write_files:
+{% for i in range(1, 4) %}
+  - owner: www-data:www-data
+    path: /var/www/html/index{{i}}.html
+    content: |
+      <html>
+      <head>
+        <title>hieuVM-{{i}}</title>
+      </head>
+      <body>
+        <h1>Hello from hieuntjs2205019 web {{i}}</h1>
+      </body>
+      </html>
+{% endfor %}
+
+runcmd:
+  - service apache2 restart
